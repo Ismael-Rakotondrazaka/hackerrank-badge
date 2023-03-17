@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "canvas": "^2.11.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-rate-limit": "^6.7.0",
+    "html-to-image": "^1.11.11",
+    "jsnode": "^1.0.0",
+    "node-cache": "^5.1.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.21"
+  }
+}
