@@ -1,3 +1,5 @@
+import { badgeRoutes } from "./routes/api/v1/badges/index.js";
+
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
@@ -19,6 +21,8 @@ app.use(
     extended: true,
   })
 );
+
+app.use("/api/v1/badges", badgeRoutes);
 
 app.get("/status/health", (req, res) => {
   res.json({
