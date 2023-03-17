@@ -1,4 +1,9 @@
 {
+  "type": "module",
+  "scripts": {
+    "start": "node ./src/server.js",
+    "dev": "nodemon ./src/server.js"
+  },
   "dependencies": {
     "canvas": "^2.11.0",
     "cors": "^2.8.5",
