@@ -1,4 +1,4 @@
-import { errorMiddleware } from "./middlewares/index.js";
+import { cacheMiddleware, errorMiddleware } from "./middlewares/index.js";
 import { badgeRoutes } from "./routes/api/v1/badges/index.js";
 import { notFoundController } from "./controllers/index.js";
 
@@ -16,6 +16,8 @@ app.use(
     credentials: true,
   })
 );
+
+app.use(cacheMiddleware);
 
 app.use(express.json());
 app.use(

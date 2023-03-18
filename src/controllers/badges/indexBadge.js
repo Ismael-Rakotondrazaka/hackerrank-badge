@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const hackerrankBaseUrl = process.env.HACKERRANK_BASE_URL;
+const serverUserAgent = process.env.SERVER_USER_AGENT;
 
 const indexBadge = async (req, res, next) => {
   try {
@@ -11,9 +12,7 @@ const indexBadge = async (req, res, next) => {
 
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    await page.setUserAgent(
-      "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
-    );
+    await page.setUserAgent(serverUserAgent);
 
     await page.goto(`${hackerrankBaseUrl}/${username}`);
 
@@ -23,7 +22,7 @@ const indexBadge = async (req, res, next) => {
     const elem = await page.waitForSelector(".section-card.hacker-badges");
 
     if (!elem) {
-      throw new Error("Element not Found");
+      throw new Error("Element not found.");
     }
 
     const buffer = await elem.screenshot({
@@ -32,8 +31,13 @@ const indexBadge = async (req, res, next) => {
     });
 
     await browser.close();
-    res.set("Content-Type", "image/webp");
-    res.send(buffer);
+
+    await res.sendData({
+      body: buffer,
+      headers: {
+        "Content-Type": "image/webp",
+      },
+    });
   } catch (error) {
     next(error);
   }
