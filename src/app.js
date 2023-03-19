@@ -10,6 +10,9 @@ dotenv.config();
 
 const app = express();
 
+const proxies = process.env.PROXIES ? +process.env.PROXIES : false;
+app.set("trust proxy", proxies);
+
 app.use(
   cors({
     origin: process.env.FRONTEND_URL,
