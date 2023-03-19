@@ -1,3 +1,7 @@
+import { cacheMiddleware, errorMiddleware } from "./middlewares/index.js";
+import { badgeRoutes } from "./routes/api/v1/badges/index.js";
+import { notFoundController } from "./controllers/index.js";
+
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
@@ -13,6 +17,8 @@ app.use(
   })
 );
 
+app.use(cacheMiddleware);
+
 app.use(express.json());
 app.use(
   express.urlencoded({
@@ -20,10 +26,16 @@ app.use(
   })
 );
 
+app.use("/api/v1/badges", badgeRoutes);
+
 app.get("/status/health", (req, res) => {
   res.json({
     message: "Hello World!",
   });
 });
+
+app.use("*", notFoundController);
+
+app.use(errorMiddleware);
 
 export { app };
