@@ -1,4 +1,8 @@
-import { cacheMiddleware, errorMiddleware } from "./middlewares/index.js";
+import {
+  cacheMiddleware,
+  errorMiddleware,
+  rateLimiterMiddleware,
+} from "./middlewares/index.js";
 import { badgeRoutes } from "./routes/api/v1/badges/index.js";
 import { notFoundController } from "./controllers/index.js";
 
@@ -12,6 +16,8 @@ const app = express();
 
 const proxies = process.env.PROXIES ? +process.env.PROXIES : false;
 app.set("trust proxy", proxies);
+
+app.use(rateLimiterMiddleware);
 
 app.use(
   cors({
