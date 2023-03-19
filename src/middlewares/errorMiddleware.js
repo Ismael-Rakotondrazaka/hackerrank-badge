@@ -1,24 +1,41 @@
-import { GeneralError, UnknownError } from "../utils/index.js";
-import { createErrorResponse } from "../utils/responses/index.js";
+import { TimeoutError } from "puppeteer";
+import path from "path";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+
+import { NotFoundError, TooManyRequestError } from "../utils/index.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const errorMiddleware = (err, req, res, next) => {
   if (err) {
-    if (err instanceof GeneralError) {
-      return res.status(err.getStatusCode()).json(
-        createErrorResponse({
-          error: err,
-          request: req,
-        })
+    if (err instanceof NotFoundError || err instanceof TimeoutError) {
+      const notFoundErrorImage = path.join(
+        __dirname,
+        "../assets/images/not-found-error.png"
       );
-    } else {
-      const serverError = new UnknownError();
 
-      return res.status(serverError.getStatusCode()).json(
-        createErrorResponse({
-          error: serverError,
-          request: req,
-        })
+      res.sendFile(notFoundErrorImage);
+
+      return;
+    } else if (err instanceof TooManyRequestError) {
+      const tooManyRequestErrorImage = path.join(
+        __dirname,
+        "../assets/images/too-many-request-error.png"
       );
+
+      res.sendFile(tooManyRequestErrorImage);
+
+      return;
+    } else {
+      const serverErrorImage = path.join(
+        __dirname,
+        "../assets/images/server-error.png"
+      );
+
+      res.sendFile(serverErrorImage);
+      return;
     }
   }
 
