@@ -7,6 +7,8 @@ const errorConfig = {
   DEFAULT_UNAUTHORIZED_ERROR_MESSAGE:
     "Authentication required to access this resource.",
   DEFAULT_FORBIDDEN_ERROR_MESSAGE: "Access denied for this resource.",
+  DEFAULT_TOO_MANY_REQUEST_ERROR_MESSAGE:
+    "Too many requests, please try again later.",
   DEFAULT_UNKNOWN_ERROR_MESSAGE: "An unknown error occurred.",
 };
 

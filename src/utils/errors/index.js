@@ -27,6 +27,8 @@ export class GeneralError extends Error {
         ? errorConfig.DEFAULT_UNAUTHORIZED_ERROR_MESSAGE
         : this instanceof ForbiddenError
         ? errorConfig.DEFAULT_FORBIDDEN_ERROR_MESSAGE
+        : this instanceof TooManyRequestError
+        ? errorConfig.DEFAULT_TOO_MANY_REQUEST_ERROR_MESSAGE
         : errorConfig.DEFAULT_UNKNOWN_ERROR_MESSAGE;
 
     if (this.#private) {
@@ -49,6 +51,8 @@ export class GeneralError extends Error {
         ? getReasonPhrase(StatusCodes.UNAUTHORIZED)
         : this instanceof ForbiddenError
         ? getReasonPhrase(StatusCodes.FORBIDDEN)
+        : this instanceof TooManyRequestError
+        ? getReasonPhrase(StatusCodes.TOO_MANY_REQUESTS)
         : getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR);
 
     this.#statusCode =
@@ -64,6 +68,8 @@ export class GeneralError extends Error {
         ? StatusCodes.UNAUTHORIZED
         : this instanceof ForbiddenError
         ? StatusCodes.FORBIDDEN
+        : this instanceof TooManyRequestError
+        ? StatusCodes.TOO_MANY_REQUESTS
         : StatusCodes.INTERNAL_SERVER_ERROR;
 
     this.#code =
@@ -80,6 +86,8 @@ export class GeneralError extends Error {
         ? "E5"
         : this instanceof ForbiddenError
         ? "E6"
+        : this instanceof TooManyRequestError
+        ? "E7"
         : "E0"); // for UnknownError
   }
 
@@ -119,3 +127,4 @@ export class UnauthorizedError extends GeneralError {}
 export class ForbiddenError extends GeneralError {}
 export class ConflictError extends GeneralError {}
 export class UnknownError extends GeneralError {}
+export class TooManyRequestError extends GeneralError {}
