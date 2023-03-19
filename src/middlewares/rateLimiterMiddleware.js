@@ -1,5 +1,6 @@
 import { rateLimit } from "express-rate-limit";
 import dotenv from "dotenv";
+import { TooManyRequestError } from "../utils/errors/index.js";
 
 dotenv.config();
 
@@ -18,7 +19,7 @@ const rateLimiterMiddleware = rateLimit({
   legacyHeaders: false,
   handler: (req, res, next, options) => {
     try {
-      throw new Error("rate");
+      throw new TooManyRequestError();
     } catch (err) {
       next(err);
     }

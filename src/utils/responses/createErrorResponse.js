@@ -7,7 +7,7 @@ const createErrorResponse = ({ error, request }) => {
       code: error.getCode(),
       dateTime: error.getDateTime(),
     },
-    path: request.url,
+    path: request.originalUrl,
     method: request.method,
     userAgent: request.headers["user-agent"],
   };

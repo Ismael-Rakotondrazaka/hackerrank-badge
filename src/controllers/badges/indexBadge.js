@@ -1,5 +1,6 @@
 import puppeteer from "puppeteer";
 import dotenv from "dotenv";
+import { NotFoundError } from "../../utils/index.js";
 
 dotenv.config();
 
@@ -22,7 +23,7 @@ const indexBadge = async (req, res, next) => {
     const elem = await page.waitForSelector(".section-card.hacker-badges");
 
     if (!elem) {
-      throw new Error("Element not found.");
+      throw new NotFoundError();
     }
 
     const buffer = await elem.screenshot({
