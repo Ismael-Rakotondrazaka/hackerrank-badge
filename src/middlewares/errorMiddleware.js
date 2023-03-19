@@ -3,7 +3,11 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 
-import { NotFoundError, TooManyRequestError } from "../utils/index.js";
+import {
+  BadRequestError,
+  NotFoundError,
+  TooManyRequestError,
+} from "../utils/index.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -28,6 +32,15 @@ const errorMiddleware = (err, req, res, next) => {
       res.sendFile(tooManyRequestErrorImage);
 
       return;
+    } else if (err instanceof BadRequestError) {
+      const badRequestErrorImage = path.join(
+        __dirname,
+        "../assets/images/bad-request-error.png"
+      );
+
+      res.sendFile(badRequestErrorImage);
+
+      return;
     } else {
       const serverErrorImage = path.join(
         __dirname,
@@ -35,6 +48,7 @@ const errorMiddleware = (err, req, res, next) => {
       );
 
       res.sendFile(serverErrorImage);
+
       return;
     }
   }

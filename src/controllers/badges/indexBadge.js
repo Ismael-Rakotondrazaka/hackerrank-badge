@@ -1,6 +1,9 @@
 import puppeteer from "puppeteer";
 import dotenv from "dotenv";
-import { NotFoundError } from "../../utils/index.js";
+import {
+  NotFoundError,
+  getImageContentTypeFromExtension,
+} from "../../utils/index.js";
 
 dotenv.config();
 
@@ -10,6 +13,7 @@ const serverUserAgent = process.env.SERVER_USER_AGENT;
 const indexBadge = async (req, res, next) => {
   try {
     const { username } = req.params;
+    const { type } = req.query;
 
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
@@ -26,9 +30,11 @@ const indexBadge = async (req, res, next) => {
       throw new NotFoundError();
     }
 
+    const contentType = getImageContentTypeFromExtension(type);
+
     const buffer = await elem.screenshot({
-      type: "webp",
-      quality: 100,
+      type,
+      quality: contentType !== "image/png" ? 100 : undefined,
     });
 
     await browser.close();
@@ -36,7 +42,7 @@ const indexBadge = async (req, res, next) => {
     await res.sendData({
       body: buffer,
       headers: {
-        "Content-Type": "image/webp",
+        "Content-Type": contentType,
       },
     });
   } catch (error) {
