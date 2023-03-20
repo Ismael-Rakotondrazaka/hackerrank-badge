@@ -1,0 +1,25 @@
+{
+  "name": "hackerrank-badge",
+  "version": "1.0.0",
+  "main": "src/server.js",
+  "type": "module",
+  "repository": "git@github.com:Ismael-Rakotondrazaka/hackerrank-badge.git",
+  "author": "Ismael Rakotondrazaka <ismaelrakotondrazaka@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node ./src/server.js",
+    "dev": "nodemon ./src/server.js"
+  },
+  "dependencies": {
+    "cache-manager": "^5.1.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-rate-limit": "^6.7.0",
+    "http-status-codes": "^2.2.0",
+    "puppeteer": "^19.7.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.21"
+  }
+}
