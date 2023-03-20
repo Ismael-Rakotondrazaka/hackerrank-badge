@@ -1,5 +1,11 @@
 {
+  "name": "hackerrank-badge",
+  "version": "1.0.0",
+  "main": "src/server.js",
   "type": "module",
+  "repository": "git@github.com:Ismael-Rakotondrazaka/hackerrank-badge.git",
+  "author": "Ismael Rakotondrazaka <ismaelrakotondrazaka@gmail.com>",
+  "license": "MIT",
   "scripts": {
     "start": "node ./src/server.js",
     "dev": "nodemon ./src/server.js"
@@ -15,6 +21,5 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.21"
-  },
-  "license": "MIT"
+  }
 }
