@@ -9,6 +9,7 @@ dotenv.config();
 
 const hackerrankBaseUrl = process.env.HACKERRANK_BASE_URL;
 const serverUserAgent = process.env.SERVER_USER_AGENT;
+const browserTimeout = process.env.BROWSER_TIMEOUT;
 
 const indexBadge = async (req, res, next) => {
   try {
@@ -18,6 +19,9 @@ const indexBadge = async (req, res, next) => {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.setUserAgent(serverUserAgent);
+    if (browserTimeout) {
+      page.setDefaultNavigationTimeout(+browserTimeout);
+    }
 
     await page.goto(`${hackerrankBaseUrl}/${username}`);
 
